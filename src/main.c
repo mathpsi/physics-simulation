@@ -8,7 +8,7 @@
 char* vs_source =
 "#version 400 core\n                                    \
  layout (location = 0) in vec3 inPosition;              \
- void main()                                            \ 
+ void main()                                            \
  {                                                      \
     gl_Position = vec4(inPosition, 1.0f);               \
  }";
