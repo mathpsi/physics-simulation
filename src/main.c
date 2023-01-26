@@ -42,7 +42,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Prevent the old OpenGL 
 
     /* Create window */
-    GLFWwindow* window = glfwCreateWindow(1920, 1080, "Physics Simulation", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(1920, 1080, "Physics Simulation", NULL, NULL);
     if (window == NULL) {
         fprintf(stderr, "Failed to open GLFW window.\n");
     	glfwTerminate();
