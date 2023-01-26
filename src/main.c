@@ -8,7 +8,7 @@
 char* vs_source =
 "#version 400 core\n                                    \
  layout (location = 0) in vec3 inPosition;              \
- void main()                                            \    
+ void main()                                            \ 
  {                                                      \
     gl_Position = vec4(inPosition, 1.0f);               \
  }";
@@ -16,7 +16,7 @@ char* vs_source =
 char* fs_source =
 "#version 400 core\n                                    \
  out vec4 fragColor;                                    \
- void main()                                            \    
+ void main()                                            \
  {                                                      \
     fragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);           \
  }";
@@ -38,7 +38,7 @@ int main() {
     //glfwWindowHint(GLFW_SAMPLES, 16); // Antialiasing
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // OpenGL 4
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Prevent the old OpenGL 
 
     /* Create window */
