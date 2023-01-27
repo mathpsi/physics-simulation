@@ -43,7 +43,7 @@ int main() {
     /* Creating program and shaders */
     progid = glCreateProgram();
 
-	/* TODO: make atchshdr better */
+    /* TODO: make atchshdr better */
     atchshdr("../shaders/vs.glsl", GL_VERTEX_SHADER, progid); 
     atchshdr("../shaders/fs.glsl", GL_FRAGMENT_SHADER, progid);
 
