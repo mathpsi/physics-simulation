@@ -1,25 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "shader.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-/* GLSL codes */
-char *vssrc =
-"#version 400 core\n                                    \
- layout (location = 0) in vec3 inPosition;              \
- void main()                                            \
- {                                                      \
-    gl_Position = vec4(inPosition, 1.0f);               \
- }";
-
-char *fssrc =
-"#version 400 core\n                                    \
- out vec4 fragColor;                                    \
- void main()                                            \
- {                                                      \
-    fragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);           \
- }";
 
 /* Coordinates of triangle */
 float vertices[] = {
@@ -33,7 +15,7 @@ int main() {
     /* Initialize GLFW */
     if (!glfwInit()) {
         fprintf(stderr, "Failed to initialize GLFW\n");
-	return -1;
+	    return -1;
     }
     //glfwWindowHint(GLFW_SAMPLES, 16); // Antialiasing
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4); // OpenGL 4
@@ -46,30 +28,24 @@ int main() {
     if (window == NULL) {
         fprintf(stderr, "Failed to open GLFW window.\n");
     	glfwTerminate();
-	return -1;
+    	return -1;
     }
 
     /* Initialize GLAD */
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         fprintf(stderr, "Failed to initialize GLAD\n");
-	return -1;
+	    return -1;
     }
      
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
     /* Creating program and shaders */
     progid = glCreateProgram();
-    unsigned int vertid = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertid, 1, &vssrc, NULL);
-    glCompileShader(vertid);
 
-    unsigned int fragid = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragid, 1, &fssrc, NULL);
-    glCompileShader(fragid);
-
-    glAttachShader(progid, vertid);
-    glAttachShader(progid, fragid);
+	/* TODO: make atchshdr better */
+    atchshdr("../shaders/vs.glsl", GL_VERTEX_SHADER, progid); 
+    atchshdr("../shaders/fs.glsl", GL_FRAGMENT_SHADER, progid);
 
     glLinkProgram(progid);
 
@@ -89,7 +65,7 @@ int main() {
     
     do {
        /* Clear the screen */
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
 	/* Draw triangle */
