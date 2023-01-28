@@ -11,7 +11,6 @@ void atchshdr(char *fname, unsigned int shdtype, unsigned int progid) {
     glShaderSource(shdid, 1, &src, NULL);
     glCompileShader(shdid);
 
-
     /* Exception handling */
     int is_comp;
     char log[512];
@@ -33,8 +32,7 @@ char *getshdr(char *fname) {
  
     file = fopen(fname, "r");
     
-    if(file == NULL)
-      return "ERR_FILE_NULL";
+    if (file == NULL) { return "ERR_FILE_NULL" };
  
     fseek(file, 0L, SEEK_END);
     fsize = ftell(file);
@@ -43,8 +41,7 @@ char *getshdr(char *fname) {
  
     buff = (char*)calloc(fsize, sizeof(char));	
  
-    if(buff == NULL)
-      return "ERR_BUFF_NULL";
+    if (buff == NULL) { return "ERR_BUFF_NULL"; }
  
     fread(buff, sizeof(char), fsize, file);
     fclose(file);
