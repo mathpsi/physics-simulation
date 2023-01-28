@@ -72,7 +72,7 @@ int main() {
 	glUseProgram(progid);
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(0);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();

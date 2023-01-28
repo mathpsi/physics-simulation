@@ -6,10 +6,22 @@ void atchshdr(char *fname, unsigned int shdtype, unsigned int progid) {
     unsigned int shdid = glCreateShader(shdtype);
 
     char *src = getshdr(fname);
-    printf("%s\n", src);
+    if (src[0] == 'E') { fprintf(stderr,"%s\n", src); }
     
     glShaderSource(shdid, 1, &src, NULL);
     glCompileShader(shdid);
+
+
+    /* Exception handling */
+    int is_comp;
+    char log[512];
+    glGetShaderiv(shdid, GL_COMPILE_STATUS, &is_comp);
+    
+    if (!is_comp) {
+        glGetShaderInfoLog(shdid, 512, 0, log);
+	fprintf(stderr, "%s\n", log);
+    }
+    
     glAttachShader(progid, shdid);
     
 }
