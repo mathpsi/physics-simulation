@@ -32,7 +32,7 @@ char *getshdr(char *fname) {
  
     file = fopen(fname, "r");
     
-    if (file == NULL) { return "ERR_FILE_NULL"; };
+    if (file == NULL) { return "ERR_FILE_NULL"; }
  
     fseek(file, 0L, SEEK_END);
     fsize = ftell(file);
