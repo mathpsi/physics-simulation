@@ -10,7 +10,7 @@ float vertices[] = {
      0.0f,  0.5f, 0.0f 
 }; 
 
-unsigned int progid; // For handling program id
+GLuint progid; // For handling program id
 int main() {
     /* Initialize GLFW */
     if (!glfwInit()) {
@@ -49,8 +49,7 @@ int main() {
 
     glLinkProgram(progid);
 
-    unsigned int vbo;
-    unsigned int vao;
+    GLuint vao, vbo;
 
     glGenVertexArrays(1, &vao);
     
@@ -59,7 +58,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*)0);
 
     glEnableVertexAttribArray(0);
     
@@ -72,7 +71,7 @@ int main() {
 	glUseProgram(progid);
 	glBindVertexArray(vao);
 	glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();
