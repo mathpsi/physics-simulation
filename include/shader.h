@@ -1,10 +1,9 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <glad/glad.h>
 
-void atchshdr(char *file_name, unsigned int shader_type, unsigned int program_id);
-char *getshdr(char *file_name);
+void AttachShader(char *file_name, GLuint shader_type, GLuint program_id);
+char *GetShader(char *file_name);
 
 #endif

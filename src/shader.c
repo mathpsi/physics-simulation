@@ -1,49 +1,52 @@
 #include "shader.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <glad/glad.h>
 
-void atchshdr(char *fname, unsigned int shdtype, unsigned int progid) {
-    unsigned int shdid = glCreateShader(shdtype);
+void AttachShader(char *file_name, GLuint shader_type, GLuint program_id) {
+    GLuint shader_id = glCreateShader(shader_type);
 
-    char *src = getshdr(fname);
-    if (src[0] == 'E') { fprintf(stderr,"%s\n", src); }
+    char *source = GetShader(file_name);
+    if (source[0] == 'E') { fprintf(stderr,"%s\n", source); }
     
-    glShaderSource(shdid, 1, &src, NULL);
-    glCompileShader(shdid);
+    glShaderSource(shader_id, 1, &source, NULL);
+    glCompileShader(shader_id);
 
-    /* Exception handling */
-    int is_comp;
+    /* 
+     * Error handling 
+     */
+    int is_compiled;
     char log[512];
-    glGetShaderiv(shdid, GL_COMPILE_STATUS, &is_comp);
+    glGetShaderiv(shader_id, GL_COMPILE_STATUS, &is_compiled);
     
-    if (!is_comp) {
-        glGetShaderInfoLog(shdid, 512, 0, log);
+    if (!is_compiled) {
+        glGetShaderInfoLog(shader_id, 512, 0, log);
 	fprintf(stderr, "%s\n", log);
     }
     
-    glAttachShader(progid, shdid);
-    
+    glAttachShader(program_id, shader_id); 
 }
 
-char *getshdr(char *fname) {	
+char *GetShader(char *file_name) {	
     FILE *file;
     char *buff;
-    long fsize;
+    long file_size;
  
-    file = fopen(fname, "r");
+    file = fopen(file_name, "r");
     
     if (file == NULL) { return "ERR_FILE_NULL"; }
  
     fseek(file, 0L, SEEK_END);
-    fsize = ftell(file);
+    file_size = ftell(file);
  
     fseek(file, 0L, SEEK_SET);	
  
-    buff = (char*)calloc(fsize, sizeof(char));	
+    buff = (char*)calloc(file_size, sizeof(char));	
  
     if (buff == NULL) { return "ERR_BUFF_NULL"; }
  
-    fread(buff, sizeof(char), fsize, file);
+    fread(buff, sizeof(char), file_size, file);
     fclose(file);
  
     return buff;
