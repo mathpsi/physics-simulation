@@ -54,7 +54,7 @@ int main() {
     program_id = glCreateProgram();
 
     /* 
-     * TODO: make atchshdr better 
+     * TODO: make AttachShader better 
      */
     AttachShader("../shaders/shader.vert", GL_VERTEX_SHADER, program_id); 
     AttachShader("../shaders/shader.frag", GL_FRAGMENT_SHADER, program_id);
