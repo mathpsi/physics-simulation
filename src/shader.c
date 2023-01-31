@@ -7,7 +7,7 @@
 void AttachShader(char *file_name, GLuint shader_type, GLuint program_id) {
     GLuint shader_id = glCreateShader(shader_type);
 
-    char *source = GetShader(file_name);
+    GLchar *source = GetShader(file_name);
     if (source[0] == 'E') { fprintf(stderr,"%s\n", source); }
     
     glShaderSource(shader_id, 1, &source, NULL);
@@ -16,8 +16,8 @@ void AttachShader(char *file_name, GLuint shader_type, GLuint program_id) {
     /* 
      * Error handling 
      */
-    int is_compiled;
-    char log[512];
+    GLint is_compiled;
+    GLchar log[512];
     glGetShaderiv(shader_id, GL_COMPILE_STATUS, &is_compiled);
     
     if (!is_compiled) {
