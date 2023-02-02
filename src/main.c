@@ -5,9 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* 
- * Coordinates of triangle
- */
+/* Coordinates of triangle */
 GLfloat vertices[] = {
     -0.5f,  0.0f, 0.0f,
      0.5f,  0.0f, 0.0f,
@@ -27,9 +25,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); /* To make MacOS happy */
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); /* Prevent the old OpenGL */
 
-    /* 
-     * Create window 
-     */
+    /* Create window */
     GLFWwindow *window = glfwCreateWindow(1920, 1080, "Physics Simulation", NULL, NULL);
     if (window == NULL) {
         fprintf(stderr, "Failed to open GLFW window.\n");
@@ -37,9 +33,7 @@ int main() {
     	return -1;
     }
 
-    /* 
-     * Initialize GLAD 
-     */
+    /* Initialize GLAD */
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         fprintf(stderr, "Failed to initialize GLAD\n");
@@ -48,14 +42,10 @@ int main() {
      
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     
-    /* 
-     * Creating program and shaders 
-     */
+    /* Creating program and shaders */
     program_id = glCreateProgram();
 
-    /* 
-     * TODO: make AttachShader better 
-     */
+    /* TODO: make AttachShader better */
     AttachShader("../shaders/shader.vert", GL_VERTEX_SHADER, program_id); 
     AttachShader("../shaders/shader.frag", GL_FRAGMENT_SHADER, program_id);
 
@@ -75,22 +65,16 @@ int main() {
     glEnableVertexAttribArray(0);
     
     do {
-        /* 
-	 * Clear the screen 
-	 */
+        /* Clear the screen */
         glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-	/* 
-	 * Draw triangle 
-	 */
+	/* Draw triangle */
 	glUseProgram(program_id);
 	glBindVertexArray(vao);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
-	/* 
-	 * Swap buffers 
-	 */
+	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
