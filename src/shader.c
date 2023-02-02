@@ -13,9 +13,7 @@ void AttachShader(char *file_name, GLuint shader_type, GLuint program_id) {
     glShaderSource(shader_id, 1, &source, NULL);
     glCompileShader(shader_id);
 
-    /* 
-     * Error handling 
-     */
+    /* Error handling */
     GLint is_compiled;
     GLchar log[512];
     glGetShaderiv(shader_id, GL_COMPILE_STATUS, &is_compiled);
