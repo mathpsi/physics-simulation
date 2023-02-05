@@ -1,4 +1,5 @@
 #include "shader.h"
+#include "object.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -51,33 +52,15 @@ int main() {
 
     glLinkProgram(program_id);
 
-    GLuint vao, vbo;
-
-    glGenVertexArrays(1, &vao);
+    Renderer *renderer = InitializeRenderer();
     
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*)0);
-
-    glEnableVertexAttribArray(0);
+    Object *object = InitializeObject(0.0f, 0.0f, square, renderer);
     
     do {
-        /* Clear the screen */
-        glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-	/* Draw triangle */
-	glUseProgram(program_id);
-	glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
-
+        RenderObjects(renderer, program_id);
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();
-
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) { glDeleteProgram(program_id); }
     } /* Check if the ESC key was pressed or the window was closed */
     while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
