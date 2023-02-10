@@ -44,11 +44,11 @@ int main() {
     AttachShader("../shaders/shader.frag", GL_FRAGMENT_SHADER, program_id);
 
     glLinkProgram(program_id);
-
-    Renderer *renderer = InitializeRenderer();
+    
+    Renderer *renderer = InitializeRenderer(program_id);
     
     Object *object = InitializeObject(0.0f, 0.0f, square, renderer);
-    
+
     do {
         RenderObjects(renderer, program_id);
 	/* Swap buffers */

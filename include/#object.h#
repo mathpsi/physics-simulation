@@ -22,9 +22,6 @@ typedef struct
     GLuint square_vao;
     GLuint triangle_vao;
     GLuint move;
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
     Object **objects;
 } Renderer;
 

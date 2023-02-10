@@ -24,15 +24,16 @@ GLfloat sq_vertices[] = {
 
 Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
-    renderer->objects = malloc(sizeof(renderer->objects) * 5); /* Max objects = 5 */
     object->x = x; object->y = y; object->object_type = object_type;
     renderer->objects[renderer->object_count] = object; renderer->object_count++;
     return object;
 }
 
-Renderer *InitializeRenderer() {
+Renderer *InitializeRenderer(GLuint program_id) {
     Renderer *renderer = malloc(sizeof(Renderer));
-
+    renderer->objects = malloc(sizeof(renderer->objects) * 5); /* Max objects = 5 */
+    GLuint move = glGetUniformLocation(program_id, "move");
+    
     GLuint square_vao, triangle_vao, square_vbo, triangle_vbo;
     
     glGenVertexArrays(1, &square_vao);
@@ -52,7 +53,7 @@ Renderer *InitializeRenderer() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*)0);
     glEnableVertexAttribArray(0);
     
-    renderer->object_count = 0; renderer->square_vao = square_vao; renderer->triangle_vao = triangle_vao;
+    renderer->object_count = 0; renderer->square_vao = square_vao; renderer->triangle_vao = triangle_vao; renderer->move = move;
     
     return renderer;
 }
@@ -75,6 +76,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	    glBufferData(GL_ARRAY_BUFFER, sizeof(tri_vertices), tri_vertices, GL_STATIC_DRAW);
       }
 
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+      glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
+      glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }
