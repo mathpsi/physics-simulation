@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 /* Coordinates of triangle */
 GLfloat tri_vertices[] = {
@@ -24,8 +25,9 @@ GLfloat sq_vertices[] = {
 
 Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
-    object->x = x; object->y = y; object->object_type = object_type;
-    renderer->objects[renderer->object_count] = object; renderer->object_count++;
+    object->collide = calloc(4, sizeof(GLuint)); /* Max objects - 1 */
+    object->x = x; object->y = y; object->object_type = object_type; object->id = renderer->object_count;
+    renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collide_count = 0;
     return object;
 }
 
@@ -64,19 +66,35 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(program_id);
-
+    
     /* Draw objects */
     /* TODO: Draw objects without calling glBufferData for each frame */
     for (int i = 0; i < renderer->object_count; i++) {
-      if (renderer->objects[i]->object_type == square) {
+        /* Collision detection but not works well */
+        for (int j = i + 1; j < renderer->object_count - i; j++) {
+	    /* Distance = sqrt((x1 - x2)^2 + (y1 - y2)^2) */
+	    if (.099 > sqrt(pow(renderer->objects[i]->x - renderer->objects[j]->x, 2) + pow(renderer->objects[i]->y - renderer->objects[j]->y, 2))) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		renderer->objects[i]->collide_count++; renderer->objects[j]->collide_count++;
+	        renderer->objects[i]->collide[renderer->objects[i]->collide_count - 1] = renderer->objects[j]->id;
+		renderer->objects[j]->collide[renderer->objects[j]->collide_count - 1] = renderer->objects[i]->id;
+	    } else {
+	        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	        if (renderer->objects[i]->collide_count > 0) {
+		    renderer->objects[i]->collide_count--; renderer->objects[j]->collide_count--;
+		}
+	    }
+	}
+
+	if (renderer->objects[i]->object_type == square) {
     	    glBindVertexArray(renderer->square_vao);
     	    glBufferData(GL_ARRAY_BUFFER, sizeof(sq_vertices), sq_vertices, GL_STATIC_DRAW);
-      } else {
+	} else {
 	    glBindVertexArray(renderer->triangle_vao);
 	    glBufferData(GL_ARRAY_BUFFER, sizeof(tri_vertices), tri_vertices, GL_STATIC_DRAW);
-      }
+	}
 
-      glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
-      glDrawArrays(GL_TRIANGLES, 0, 6);
+	glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }

@@ -13,7 +13,10 @@ typedef struct
 {
     GLfloat x;
     GLfloat y;
-    GLuint object_type;  
+    GLuint object_type;
+    GLuint id;
+    GLuint *collide;
+    GLuint collide_count;
 } Object;
 
 typedef struct

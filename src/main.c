@@ -48,9 +48,18 @@ int main() {
     Renderer *renderer = InitializeRenderer(program_id);
     
     Object *object = InitializeObject(0.0f, 0.0f, square, renderer);
+    
+    Object *object_2 = InitializeObject(0.0f, 0.0f, square, renderer);
 
+    GLfloat x = -1.0f;
+    
     do {
+        object->x = x;
         RenderObjects(renderer, program_id);
+	x += 0.005f;
+	if (x >= 1.0f) {
+	    x = -1.0f;
+	}
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();
