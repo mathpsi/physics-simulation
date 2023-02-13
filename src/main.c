@@ -51,6 +51,10 @@ int main() {
     
     Object *object_2 = InitializeObject(0.0f, 0.0f, square, renderer);
 
+    Object *object_3 = InitializeObject(0.5f, 0.0f, square, renderer);
+
+    Object *object_4 = InitializeObject(0.5f, 0.5f, square, renderer);
+    
     GLfloat x = -1.0f;
     
     do {
