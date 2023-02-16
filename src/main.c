@@ -56,8 +56,16 @@ int main() {
     Object *object_4 = InitializeObject(0.5f, 0.5f, square, renderer);
     
     GLfloat x = -1.0f;
+
+    GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
+
+    GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
     
     do {
+        /* Projection matrix */
+        glUniform1f(aspect_ratio_location, aspect_ratio);
+
+	/* Rendering objects */
         object->x = x;
         RenderObjects(renderer, program_id);
 	x += 0.005f;
