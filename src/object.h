@@ -13,6 +13,7 @@ typedef struct
 {
     GLfloat x;
     GLfloat y;
+    GLfloat radius;
     GLuint object_type;
     GLuint id;
     GLuint *collide;

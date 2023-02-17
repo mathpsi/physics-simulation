@@ -1,4 +1,5 @@
 #include "object.h"
+#include "collision.h"
 
 #include <glad/glad.h>
 #include <stdio.h>
@@ -29,6 +30,7 @@ Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer
     object->collide = calloc(4, sizeof(GLuint)); /* Max objects - 1 */
     object->x = x; object->y = y; object->object_type = object_type; object->id = renderer->object_count;
     renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collide_count = 0;
+    object->radius = 0.05f;
     return object;
 }
 
@@ -73,16 +75,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
     for (int i = 0; i < renderer->object_count; i++) {
         /* Collision detection but not works well */
         for (int j = i + 1; j < renderer->object_count; j++) {
-	    /* Distance = sqrt((x1 - x2)^2 + (y1 - y2)^2) */
-	    if (.099 > sqrt(pow(renderer->objects[i]->x - renderer->objects[j]->x, 2) + pow(renderer->objects[i]->y - renderer->objects[j]->y, 2))) {
-		renderer->objects[i]->collide_count++; renderer->objects[j]->collide_count++;
-	        renderer->objects[i]->collide[renderer->objects[i]->collide_count - 1] = renderer->objects[j]->id;
-		renderer->objects[j]->collide[renderer->objects[j]->collide_count - 1] = renderer->objects[i]->id;
-	    } else {
-	        if (renderer->objects[i]->collide_count > 0 && renderer->objects[j]->collide_count > 0) {
-		    renderer->objects[i]->collide_count--; renderer->objects[j]->collide_count--;
-		}
-	    }
+	    CircularCollision(renderer->objects[i], renderer->objects[j]);
 	}
 	
 	/* Object shape */
