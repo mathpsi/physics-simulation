@@ -64,8 +64,22 @@ int main() {
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
 
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
+
+    GLfloat time_current;
+    GLfloat time_last = glfwGetTime();
+
+    GLuint frame;
     
     do {
+        /* FPS Counter */
+        frame++;
+	time_current = glfwGetTime();
+
+        if (time_current - time_last >= 1.0f) {
+	    printf("FPS: %d\n", frame);
+	    frame = 0; time_last += 1.0f;
+	}
+
         /* Projection matrix */
         glUniform1f(aspect_ratio_location, aspect_ratio);
 
