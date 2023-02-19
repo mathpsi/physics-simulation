@@ -44,6 +44,10 @@ int main() {
     AttachShader("../shaders/shader.frag", GL_FRAGMENT_SHADER, program_id);
 
     glLinkProgram(program_id);
+
+    printf("Renderer: %s\n", glGetString(GL_RENDERER));
+    printf("Vendor: %s\n", glGetString(GL_VENDOR));
+    printf("Version: %s\n", glGetString(GL_VERSION));
     
     Renderer *renderer = InitializeRenderer(program_id);
     
