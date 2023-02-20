@@ -1,4 +1,4 @@
-# physics-simulation
+# physiks
 I'm trying to make a physics engine.
 
 ## Installation
