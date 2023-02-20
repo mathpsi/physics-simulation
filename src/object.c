@@ -27,9 +27,10 @@ GLfloat sq_vertices[] = {
 
 Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
-    object->collide = calloc(4, sizeof(GLuint)); /* Max objects - 1 */
+    object->collision = malloc(sizeof(Collision));
+    object->collision->collide = calloc(4, sizeof(GLuint)); /* Max objects - 1 */
     object->x = x; object->y = y; object->object_type = object_type; object->id = renderer->object_count;
-    renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collide_count = 0;
+    renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collision->collide_count = 0;
     object->radius = 0.05f;
     return object;
 }
@@ -87,14 +88,14 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	    glBufferData(GL_ARRAY_BUFFER, sizeof(tri_vertices), tri_vertices, GL_STATIC_DRAW);
 	}
 
-	if (renderer->objects[i]->collide_count > 0) {
+	if (renderer->objects[i]->collision->collide_count > 0) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	} else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 	
-        renderer->objects[i]->collide_count = 0;
-	memset(renderer->objects[i]->collide, 0, sizeof(renderer->objects[i]->collide));
+        renderer->objects[i]->collision->collide_count = 0;
+	memset(renderer->objects[i]->collision->collide, 0, sizeof(renderer->objects[i]->collision->collide));
 	
 	glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

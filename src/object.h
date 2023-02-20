@@ -11,13 +11,19 @@ typedef enum
 
 typedef struct
 {
+    GLuint *collide;
+    GLuint collide_count;
+} Collision;
+
+typedef struct
+{
     GLfloat x;
     GLfloat y;
     GLfloat radius;
     GLuint object_type;
     GLuint id;
-    GLuint *collide;
-    GLuint collide_count;
+
+    Collision *collision;
 } Object;
 
 typedef struct
@@ -37,5 +43,7 @@ Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer
 Renderer *InitializeRenderer(GLuint program_id);
 
 void RenderObjects(Renderer *renderer, GLuint program_id);
+
+#include "collision.h"
 
 #endif
