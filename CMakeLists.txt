@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.25.1)
 
-project(physics-simulation)
+project(physiks)
 
 set(PROJECT_DIR ${CMAKE_SOURCE_DIR})
 set(GLAD_INCLUDE_DIR ${PROJECT_DIR}/vendor/glad/include/)
