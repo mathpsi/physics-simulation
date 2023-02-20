@@ -4,7 +4,7 @@ I'm trying to make a physics engine.
 ## Installation
 * Clone the repository.
 ```
-git clone --recursive https://github.com/mathpsi/physics-simulation.git
+git clone --recursive https://github.com/mathpsi/physiks.git
 ```
 
 ## Building
