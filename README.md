@@ -20,3 +20,5 @@ Build.
 ```
 make -C build
 ```
+## Contributing
+See [Contributing](CONTRIBUTING.md).
