@@ -5,9 +5,8 @@
 
 typedef enum
 {
-  square,
-  triangle
-} object_type;
+    rectangle
+} Shape_t;
 
 typedef struct
 {
@@ -17,20 +16,25 @@ typedef struct
 
 typedef struct
 {
+    Shape_t shape;
+    GLfloat *vertices;
+} Shape;
+
+typedef struct
+{
     GLfloat x;
     GLfloat y;
     GLfloat radius;
-    GLuint object_type;
     GLuint id;
 
+    Shape *shape;
     Collision *collision;
 } Object;
 
 typedef struct
 {
     GLuint object_count;
-    GLuint square_vao;
-    GLuint triangle_vao;
+    GLuint vao;
     GLuint move;
     GLfloat x;
     GLfloat y;
@@ -38,7 +42,7 @@ typedef struct
     Object **objects;
 } Renderer;
 
-Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer *renderer);
+Object *InitializeObject(GLfloat x, GLfloat y, Shape_t object_type, GLfloat width, GLfloat height, GLfloat radius, Renderer *renderer);
 
 Renderer *InitializeRenderer(GLuint program_id);
 

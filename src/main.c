@@ -51,10 +51,10 @@ int main() {
     
     Renderer *renderer = InitializeRenderer(program_id);
     
-    Object *object = InitializeObject(0.0f, 0.0f, square, renderer);
-    Object *object_2 = InitializeObject(0.0f, 0.0f, square, renderer);
-    Object *object_3 = InitializeObject(0.5f, 0.0f, square, renderer);
-    Object *object_4 = InitializeObject(0.5f, 0.5f, square, renderer);
+    Object *object = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
+    Object *object_2 = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
+    Object *object_3 = InitializeObject(0.5f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
+    Object *object_4 = InitializeObject(0.5f, 0.5f, rectangle, .05f, .05f, .0f, renderer);
     
     GLfloat x = -1.0f;
 
@@ -81,7 +81,7 @@ int main() {
 	/* Rendering objects */
         object->x = x;
         RenderObjects(renderer, program_id);
-	x += 0.005f;
+	x += 0.002f;
 	if (x >= 1.0f) {
 	    x = -1.0f;
 	}
