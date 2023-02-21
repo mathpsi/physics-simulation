@@ -28,7 +28,8 @@ GLfloat sq_vertices[] = {
 Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
     object->collision = malloc(sizeof(Collision));
-    object->collision->collide = calloc(4, sizeof(GLuint)); /* Max objects - 1 */
+    object->collision->collide = malloc(sizeof(GLuint*));
+    renderer->objects = realloc(renderer->objects, sizeof(Object**) * (renderer->object_count + 1));
     object->x = x; object->y = y; object->object_type = object_type; object->id = renderer->object_count;
     renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collision->collide_count = 0;
     object->radius = 0.05f;
@@ -37,7 +38,7 @@ Object *InitializeObject(GLfloat x, GLfloat y, object_type object_type, Renderer
 
 Renderer *InitializeRenderer(GLuint program_id) {
     Renderer *renderer = malloc(sizeof(Renderer));
-    renderer->objects = malloc(sizeof(renderer->objects) * 5); /* Max objects = 5 */
+    renderer->objects = malloc(sizeof(Object**)); 
     GLuint move = glGetUniformLocation(program_id, "move");
     
     GLuint square_vao, triangle_vao, square_vbo, triangle_vbo;

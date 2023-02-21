@@ -52,22 +52,17 @@ int main() {
     Renderer *renderer = InitializeRenderer(program_id);
     
     Object *object = InitializeObject(0.0f, 0.0f, square, renderer);
-    
     Object *object_2 = InitializeObject(0.0f, 0.0f, square, renderer);
-
     Object *object_3 = InitializeObject(0.5f, 0.0f, square, renderer);
-
     Object *object_4 = InitializeObject(0.5f, 0.5f, square, renderer);
     
     GLfloat x = -1.0f;
 
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
-
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
 
     GLfloat time_current;
     GLfloat time_last = glfwGetTime();
-
     GLuint frame;
     
     do {
