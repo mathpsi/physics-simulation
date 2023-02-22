@@ -4,5 +4,6 @@
 #include "object.h"
 
 int CircularCollision(Object *object_1, Object *object_2);
+int RectangularCollision(Object *object_1, Object *object_2);
 
 #endif
