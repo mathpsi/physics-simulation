@@ -22,9 +22,8 @@ Object *InitializeObject(GLfloat x, GLfloat y, Shape_t shape, GLfloat width, GLf
     }
     object->collision->collide = malloc(sizeof(GLuint*));
     renderer->objects = realloc(renderer->objects, sizeof(Object**) * (renderer->object_count + 1));
-    object->x = x; object->y = y; object->shape->shape = shape;  object->id = renderer->object_count;
+    object->x = x; object->y = y; object->shape->shape = shape;  object->id = renderer->object_count; object->shape->width = width; object->shape->height = height; object->shape->radius = radius;
     renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collision->collide_count = 0;
-    object->radius = 0.05f;
     return object;
 }
 
@@ -60,7 +59,14 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
     for (int i = 0; i < renderer->object_count; i++) {
         /* Collision detection but not works well */
         for (int j = i + 1; j < renderer->object_count; j++) {
-	    CircularCollision(renderer->objects[i], renderer->objects[j]);
+	    if (renderer->objects[i]->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
+                RectangularCollision(renderer->objects[i], renderer->objects[j]);
+	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
+                RectangularCollision(renderer->objects[i], renderer->objects[j]);
+	    } else {
+	        fprintf(stderr, "ERR_NO_COLLISION_FOUND");
+	    }
+	    
 	}
 	
         /* Object shape */
@@ -74,7 +80,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	} else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
-	
+
         renderer->objects[i]->collision->collide_count = 0;
 	memset(renderer->objects[i]->collision->collide, 0, sizeof(renderer->objects[i]->collision->collide));
 	

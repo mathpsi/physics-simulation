@@ -5,7 +5,8 @@
 
 typedef enum
 {
-    rectangle
+    rectangle,
+    circle /* Unavailable now */
 } Shape_t;
 
 typedef struct
@@ -18,13 +19,15 @@ typedef struct
 {
     Shape_t shape;
     GLfloat *vertices;
+    GLfloat width;
+    GLfloat height;
+    GLfloat radius;
 } Shape;
 
 typedef struct
 {
     GLfloat x;
     GLfloat y;
-    GLfloat radius;
     GLuint id;
 
     Shape *shape;

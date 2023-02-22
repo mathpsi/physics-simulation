@@ -43,22 +43,22 @@ GLfloat *GenerateRectangle(GLfloat width, GLfloat height) {
 /* TODO: GenerateCircle function */
 
 void GetData(GLfloat *data, GLfloat *pointer) {
-  data[0] = pointer[0];
-  data[1] = pointer[1];
-  data[2] = pointer[2];
-  data[3] = pointer[3];
-  data[4] = pointer[4];
-  data[5] = pointer[5];
-  data[6] = pointer[6];
-  data[7] = pointer[7];
-  data[8] = pointer[8];
-  data[9] = pointer[9];
-  data[10] = pointer[10];
-  data[11] = pointer[11];
-  data[12] = pointer[12];
-  data[13] = pointer[13];
-  data[14] = pointer[14];
-  data[15] = pointer[15];
-  data[16] = pointer[16];
-  data[17] = pointer[17];
+    data[0] = pointer[0];
+    data[1] = pointer[1];
+    data[2] = pointer[2];
+    data[3] = pointer[3];
+    data[4] = pointer[4];
+    data[5] = pointer[5];
+    data[6] = pointer[6];
+    data[7] = pointer[7];
+    data[8] = pointer[8];
+    data[9] = pointer[9];
+    data[10] = pointer[10];
+    data[11] = pointer[11];
+    data[12] = pointer[12];
+    data[13] = pointer[13];
+    data[14] = pointer[14];
+    data[15] = pointer[15];
+    data[16] = pointer[16];
+    data[17] = pointer[17];
 }

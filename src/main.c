@@ -57,6 +57,7 @@ int main() {
     Object *object_4 = InitializeObject(0.5f, 0.5f, rectangle, .05f, .05f, .0f, renderer);
     
     GLfloat x = -1.0f;
+    GLfloat y_4 = 1.0f;
 
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
@@ -78,13 +79,23 @@ int main() {
         /* Projection matrix */
         glUniform1f(aspect_ratio_location, aspect_ratio);
 
-	/* Rendering objects */
         object->x = x;
-        RenderObjects(renderer, program_id);
+	object_4->y = y_4;
 	x += 0.002f;
+	y_4 -= 0.002f;
 	if (x >= 1.0f) {
 	    x = -1.0f;
 	}
+
+	if (y_4 <= -1.0f) {
+	    y_4 = 1.0f;
+	}
+	
+	/* Rendering objects */
+        RenderObjects(renderer, program_id);
+	
+
+	
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();
