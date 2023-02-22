@@ -38,9 +38,9 @@ int RectangularCollision(Object *object_1, Object *object_2) {
 
     if (
         object_1->x + object_1->shape->width >= object_2->x &&
-	object_1->x <= object_2->x + object_2->shape->width &&
-	object_1->y + object_1->shape->height >= object_2->y &&
-	object_1->y <= object_2->y + object_2->shape->height
+        object_1->y + object_1->shape->height >= object_2->y &&
+	object_2->x + object_2->shape->width >= object_1->x &&
+	object_2->y + object_2->shape->height >= object_1->y
        ) {
         object_1->collision->collide_count++; object_2->collision->collide_count++;
 	object_1->collision->collide = realloc(object_1->collision->collide, sizeof(GLuint*) * object_1->collision->collide_count);
@@ -50,9 +50,9 @@ int RectangularCollision(Object *object_1, Object *object_2) {
         return 1;
     } else if (
 	       !(object_1->x + object_1->shape->width >= object_2->x &&
-		object_1->x <= object_2->shape->width + object_2->x &&
 		object_1->y + object_1->shape->height >= object_2->y &&
-		object_1->y <= object_2->shape->height + object_2->y)
+		object_2->x + object_2->shape->width >= object_1->x &&
+		object_2->y + object_2->shape->height >= object_1->y)
 	       ) {
         if (object_1->collision->collide_count > 0 && object_2->collision->collide_count > 0) {
 	    object_1->collision->collide_count--; object_2->collision->collide_count--;
