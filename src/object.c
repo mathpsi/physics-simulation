@@ -62,7 +62,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	    if (renderer->objects[i]->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
                 RectangularCollision(renderer->objects[i], renderer->objects[j]);
 	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
-                RectangularCollision(renderer->objects[i], renderer->objects[j]);
+                CircularCollision(renderer->objects[i], renderer->objects[j]);
 	    } else {
 	        fprintf(stderr, "ERR_NO_COLLISION_FOUND");
 	    }
