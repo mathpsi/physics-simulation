@@ -53,7 +53,7 @@ int main() {
     
     Object *object = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
     Object *object_2 = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
-    Object *object_3 = InitializeObject(0.5f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
+    Object *object_3 = InitializeObject(0.5f, 0.0f, rectangle, .1f, .05f, .0f, renderer);
     Object *object_4 = InitializeObject(0.5f, 0.5f, rectangle, .05f, .05f, .0f, renderer);
     
     GLfloat x = -1.0f;
