@@ -60,7 +60,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
     /* Draw objects */
     /* TODO: Draw objects without calling glBufferData for each frame */
     for (int i = 0; i < renderer->object_count; i++) {
-        /* Collision detection but not works well */
+        /* Collision detection */
         for (int j = i + 1; j < renderer->object_count; j++) {
 	    if (renderer->objects[i]->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
                 RectangularCollision(renderer->objects[i], renderer->objects[j]);
