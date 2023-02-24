@@ -12,11 +12,10 @@ Object *InitializeObject(GLfloat x, GLfloat y, Shape_t shape, GLfloat width, GLf
     Object *object = malloc(sizeof(Object));
     object->collision = malloc(sizeof(Collision));
     object->shape = malloc(sizeof(Shape));
-    object->shape->vertices = malloc(sizeof(GLfloat**));
     object->shape->shape = shape;
     
     if (shape == rectangle) {
-        object->shape->vertices = GenerateRectangle(width, height);
+        
     } else {
         fprintf(stderr, "ERR_INITIALIZE_OBJECT\n");
     }
@@ -31,18 +30,22 @@ Renderer *InitializeRenderer(GLuint program_id) {
     Renderer *renderer = malloc(sizeof(Renderer));
     renderer->objects = malloc(sizeof(Object**)); 
     GLuint move = glGetUniformLocation(program_id, "move");
+    GLuint model = glGetUniformLocation(program_id, "model_wh");
     
-    GLuint vao, vbo;
+    GLuint vao, vbo, ebo;
     
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
     
     glBindVertexArray(vao);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, (void*)0);
     glEnableVertexAttribArray(0);
 
-    renderer->object_count = 0; renderer->vao = vao; renderer->move = move;
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    
+    renderer->object_count = 0; renderer->vao = vao; renderer->move = move; renderer->model = model; renderer->ebo = ebo;
     
     return renderer;
 }
@@ -71,10 +74,13 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	
         /* Object shape */
         glBindVertexArray(renderer->vao);
-	GLfloat  data[18]; /* For now 18 */
-	GetData(&data, renderer->objects[i]->shape->vertices);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-	
+	if (renderer->objects[i]->shape->shape == rectangle) {
+	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_unit_square), indices_unit_square, GL_STATIC_DRAW); /* ebo */
+            glBufferData(GL_ARRAY_BUFFER, sizeof(unit_square), unit_square, GL_STATIC_DRAW); /* vao */
+	} else {
+	    fprintf(stderr, "ERR_VERTICES\n");
+	}
+		
 	if (renderer->objects[i]->collision->collide_count > 0) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	} else {
@@ -85,6 +91,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	memset(renderer->objects[i]->collision->collide, 0, sizeof(renderer->objects[i]->collision->collide));
 	
 	glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glUniform2f(renderer->model, renderer->objects[i]->shape->width, renderer->objects[i]->shape->height);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
     }
 }

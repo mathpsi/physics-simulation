@@ -94,8 +94,6 @@ int main() {
 	/* Rendering objects */
         RenderObjects(renderer, program_id);
 	
-
-	
 	/* Swap buffers */
 	glfwSwapBuffers(window);
 	glfwPollEvents();

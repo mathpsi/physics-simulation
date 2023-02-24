@@ -3,6 +3,12 @@
 
 #include <glad/glad.h>
 
+typedef struct
+{
+    GLuint *collide;
+    GLuint collide_count;
+} Collision;
+
 typedef enum
 {
     rectangle,
@@ -11,14 +17,7 @@ typedef enum
 
 typedef struct
 {
-    GLuint *collide;
-    GLuint collide_count;
-} Collision;
-
-typedef struct
-{
     Shape_t shape;
-    GLfloat *vertices;
     GLfloat width;
     GLfloat height;
     GLfloat radius;
@@ -38,7 +37,9 @@ typedef struct
 {
     GLuint object_count;
     GLuint vao;
+    GLuint ebo;
     GLuint move;
+    GLuint model;
     GLfloat x;
     GLfloat y;
     GLfloat z;

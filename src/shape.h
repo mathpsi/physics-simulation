@@ -3,8 +3,7 @@
 
 #include <glad/glad.h>
 
-GLfloat *GenerateRectangle(GLfloat width, GLfloat height);
-
-void GetData(GLfloat *data, GLfloat *pointer);
+extern GLfloat unit_square[12];
+extern GLuint  indices_unit_square[6];
 
 #endif
