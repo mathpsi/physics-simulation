@@ -21,4 +21,4 @@ Build.
 make -C build
 ```
 ## Contributing
-See [Contributing](CONTRIBUTING.md).
+See [Contributing](.github/CONTRIBUTING.md).
