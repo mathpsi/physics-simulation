@@ -18,7 +18,7 @@ cmake -B build
 
 Build.
 ```
-make -C build
+cmake --build build
 ```
 ## Contributing
 See [Contributing](.github/CONTRIBUTING.md).
