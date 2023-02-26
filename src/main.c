@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-GLuint program_id; /* For handling program id */
 int main() {
     /* Initialize GLFW */
     if (!glfwInit()) {
@@ -35,6 +34,8 @@ int main() {
     }
      
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+    GLuint program_id; /* For handling program id */
     
     /* Creating program and shaders */
     program_id = glCreateProgram();
