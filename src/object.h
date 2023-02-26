@@ -20,7 +20,7 @@ typedef enum
 typedef struct
 {
     Shape_t shape;
-    Vector2 size;
+    Vector2 size; /* Width and height */
     GLfloat radius;
 } Shape;
 
