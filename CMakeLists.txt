@@ -7,7 +7,12 @@ set(GLAD_INCLUDE_DIR ${PROJECT_DIR}/vendor/glad/include/)
 set(GLAD_SOURCE_DIR ${PROJECT_DIR}/vendor/glad/src/)
 set(PROJECT_SOURCE_DIR ${PROJECT_DIR}/src/)
 
-set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.c ${GLAD_SOURCE_DIR}/glad.c ${PROJECT_SOURCE_DIR}/shader.c ${PROJECT_SOURCE_DIR}/object.c ${PROJECT_SOURCE_DIR}/collision.c ${PROJECT_SOURCE_DIR}/shape.c)
+set(SOURCE_FILES
+    ${PROJECT_SOURCE_DIR}/main.c ${GLAD_SOURCE_DIR}/glad.c
+    ${PROJECT_SOURCE_DIR}/shader.c ${PROJECT_SOURCE_DIR}/object.c
+    ${PROJECT_SOURCE_DIR}/collision.c ${PROJECT_SOURCE_DIR}/shape.c
+    ${PROJECT_SOURCE_DIR}/vector.c
+)
 
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "GLFW lib only")

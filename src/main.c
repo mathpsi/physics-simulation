@@ -1,5 +1,6 @@
 #include "shader.h"
 #include "object.h"
+#include "vector.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -52,10 +53,10 @@ int main() {
     
     Renderer *renderer = InitializeRenderer(program_id);
     
-    Object *object = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
-    Object *object_2 = InitializeObject(0.0f, 0.0f, rectangle, .05f, .05f, .0f, renderer);
-    Object *object_3 = InitializeObject(0.5f, 0.0f, rectangle, .1f, .05f, .0f, renderer);
-    Object *object_4 = InitializeObject(0.5f, 0.5f, rectangle, .05f, .05f, .0f, renderer);
+    Object *object = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, renderer);
+    Object *object_2 = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, renderer);
+    Object *object_3 = InitializeObject(vector2(0.5f, 0.0f), rectangle, vector2(.1f, .05f), .0f, renderer);
+    Object *object_4 = InitializeObject(vector2(0.5f, 0.5f), rectangle, vector2(.05f, .05f), .0f, renderer);
     
     GLfloat x = -1.0f;
     GLfloat y_4 = 1.0f;
@@ -80,8 +81,8 @@ int main() {
         /* Projection matrix */
         glUniform1f(aspect_ratio_location, aspect_ratio);
 
-        object->x = x;
-	object_4->y = y_4;
+        object->position.x = x;
+	object_4->position.y = y_4;
 	x += 0.002f;
 	y_4 -= 0.002f;
 	if (x >= 1.0f) {

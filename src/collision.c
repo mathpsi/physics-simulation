@@ -1,5 +1,6 @@
 #include "collision.h"
 #include "object.h"
+#include "vector.h"
 
 #include <glad/glad.h>
 #include <math.h>
@@ -12,7 +13,7 @@ int CircularCollision(Object *object_1, Object *object_2) {
     }
     
     /* Distance = sqrt((x1 - x2)^2 + (y1 - y2)^2) */
-    GLfloat distance = sqrt(pow(object_1->x - object_2->x, 2) + pow(object_1->y - object_2->y, 2));
+    GLfloat distance = sqrt(pow(object_1->position.x - object_2->position.x, 2) + pow(object_1->position.y - object_2->position.y, 2));
     
     if (object_1->shape->radius + object_2->shape->radius >= distance) {
 	object_1->collision->collide_count++; object_2->collision->collide_count++;
@@ -37,10 +38,10 @@ int RectangularCollision(Object *object_1, Object *object_2) {
     }
 
     if (
-        object_1->x + object_1->shape->width >= object_2->x &&
-        object_1->y + object_1->shape->height >= object_2->y &&
-	object_2->x + object_2->shape->width >= object_1->x &&
-	object_2->y + object_2->shape->height >= object_1->y
+        object_1->position.x + object_1->shape->size.x >= object_2->position.x &&
+        object_1->position.y + object_1->shape->size.y >= object_2->position.y &&
+	object_2->position.x + object_2->shape->size.x >= object_1->position.x &&
+	object_2->position.y + object_2->shape->size.y >= object_1->position.y
        ) {
         object_1->collision->collide_count++; object_2->collision->collide_count++;
 	object_1->collision->collide = realloc(object_1->collision->collide, sizeof(GLuint*) * object_1->collision->collide_count);
@@ -49,10 +50,10 @@ int RectangularCollision(Object *object_1, Object *object_2) {
 	object_2->collision->collide[object_2->collision->collide_count - 1] = object_1->id;
         return 1;
     } else if (
-	       !(object_1->x + object_1->shape->width >= object_2->x  &&
-		 object_1->y + object_1->shape->height >= object_2->y &&
-		 object_2->x + object_2->shape->width >= object_1->x  &&
-		 object_2->y + object_2->shape->height >= object_1->y)
+	       !(object_1->position.x + object_1->shape->size.x >= object_2->position.x  &&
+		 object_1->position.y + object_1->shape->size.y >= object_2->position.y &&
+		 object_2->position.x + object_2->shape->size.x >= object_1->position.x  &&
+		 object_2->position.y + object_2->shape->size.y >= object_1->position.y)
 	       ) {
         if (object_1->collision->collide_count > 0 && object_2->collision->collide_count > 0) {
 	    object_1->collision->collide_count--; object_2->collision->collide_count--;

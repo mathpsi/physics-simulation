@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include "vector.h"
+
 #include <glad/glad.h>
 
 typedef struct
@@ -18,15 +20,13 @@ typedef enum
 typedef struct
 {
     Shape_t shape;
-    GLfloat width;
-    GLfloat height;
+    Vector2 size;
     GLfloat radius;
 } Shape;
 
 typedef struct
 {
-    GLfloat x;
-    GLfloat y;
+    Vector2 position;
     GLuint id;
 
     Shape *shape;
@@ -40,13 +40,10 @@ typedef struct
     GLuint ebo;
     GLuint move;
     GLuint model;
-    GLfloat x;
-    GLfloat y;
-    GLfloat z;
     Object **objects;
 } Renderer;
 
-Object *InitializeObject(GLfloat x, GLfloat y, Shape_t object_type, GLfloat width, GLfloat height, GLfloat radius, Renderer *renderer);
+Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Renderer *renderer);
 
 Renderer *InitializeRenderer(GLuint program_id);
 

@@ -1,6 +1,7 @@
 #include "object.h"
 #include "collision.h"
 #include "shape.h"
+#include "vector.h"
 
 #include <glad/glad.h>
 #include <stdio.h>
@@ -8,7 +9,7 @@
 #include <math.h>
 #include <string.h>
 
-Object *InitializeObject(GLfloat x, GLfloat y, Shape_t shape, GLfloat width, GLfloat height, GLfloat radius, Renderer *renderer) {
+Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
     object->collision = malloc(sizeof(Collision));
     object->shape = malloc(sizeof(Shape));
@@ -21,7 +22,7 @@ Object *InitializeObject(GLfloat x, GLfloat y, Shape_t shape, GLfloat width, GLf
     }
     object->collision->collide = malloc(sizeof(GLuint*));
     renderer->objects = realloc(renderer->objects, sizeof(Object**) * (renderer->object_count + 1));
-    object->x = x; object->y = y; object->shape->shape = shape;  object->id = renderer->object_count; object->shape->width = width; object->shape->height = height; object->shape->radius = radius;
+    object->position = position; object->shape->shape = shape;  object->id = renderer->object_count; object->shape->size = size; object->shape->radius = radius;
     renderer->objects[renderer->object_count] = object; renderer->object_count++; object->collision->collide_count = 0;
     return object;
 }
@@ -90,8 +91,8 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
         renderer->objects[i]->collision->collide_count = 0;
 	memset(renderer->objects[i]->collision->collide, 0, sizeof(renderer->objects[i]->collision->collide));
 	
-	glUniform2f(renderer->move, renderer->objects[i]->x, renderer->objects[i]->y);
-	glUniform2f(renderer->model, renderer->objects[i]->shape->width, renderer->objects[i]->shape->height);
+	glUniform2f(renderer->move, renderer->objects[i]->position.x, renderer->objects[i]->position.y);
+	glUniform2f(renderer->model, renderer->objects[i]->shape->size.x, renderer->objects[i]->shape->size.y);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
     }
 }
