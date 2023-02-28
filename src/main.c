@@ -58,8 +58,13 @@ int main() {
     Object *object_3 = InitializeObject(vector2(0.5f, 0.0f), rectangle, vector2(.1f, .05f), .0f, renderer);
     Object *object_4 = InitializeObject(vector2(0.5f, 0.5f), rectangle, vector2(.05f, .05f), .0f, renderer);
     
+    Object *object_5 = InitializeObject(vector2(0.0f, -0.5f), circle, VECTOR2_NULL, 0.05f, renderer);
+    Object *object_6 = InitializeObject(vector2(-0.5f, -0.5f), circle, VECTOR2_NULL, 0.05f, renderer);
+    
     GLfloat x = -1.0f;
     GLfloat y_4 = 1.0f;
+
+    GLfloat x_6 = -0.5f;
 
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
@@ -83,14 +88,22 @@ int main() {
 
         object->position.x = x;
 	object_4->position.y = y_4;
+	object_6->position.x = x_6;
+	
 	x += 0.002f;
-	y_4 -= 0.002f;
+	x_6 += 0.001f; 
+	y_4 -= 0.004f;
+	
 	if (x >= 1.0f) {
 	    x = -1.0f;
 	}
 
 	if (y_4 <= -1.0f) {
 	    y_4 = 1.0f;
+	}
+
+        if (x_6 >= 0.5f) {
+	    x_6 = -0.5f;
 	}
 	
 	/* Rendering objects */

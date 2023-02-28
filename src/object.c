@@ -15,10 +15,8 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
     object->shape = malloc(sizeof(Shape));
     object->shape->shape = shape;
     
-    if (shape == rectangle) {
-        
-    } else {
-        fprintf(stderr, "ERR_INITIALIZE_OBJECT\n");
+    if (shape != rectangle && shape != circle) {
+        fprintf(stderr, "ERR_UNKOWN_SHAPE\n");
     }
     object->collision->collide = malloc(sizeof(GLuint*));
     renderer->objects = realloc(renderer->objects, sizeof(Object**) * (renderer->object_count + 1));
@@ -29,9 +27,11 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
 
 Renderer *InitializeRenderer(GLuint program_id) {
     Renderer *renderer = malloc(sizeof(Renderer));
-    renderer->objects = malloc(sizeof(Object**)); 
+    renderer->objects = malloc(sizeof(Object**));
     GLuint move = glGetUniformLocation(program_id, "move");
     GLuint model = glGetUniformLocation(program_id, "model_wh");
+    renderer->unit_circle = GenerateCircle(1.0f, CIRCLE_QUALITY); /* 32 quality */
+    renderer->indices_circle = GenerateCircleIndices(CIRCLE_QUALITY);
     
     GLuint vao, vbo, ebo;
     
@@ -61,24 +61,28 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
     /* Draw objects */
     /* TODO: Draw objects without calling glBufferData for each frame */
     for (int i = 0; i < renderer->object_count; i++) {
+        Object *object = renderer->objects[i];
         /* Collision detection */
         for (int j = i + 1; j < renderer->object_count; j++) {
-	    if (renderer->objects[i]->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
-                RectangularCollision(renderer->objects[i], renderer->objects[j]);
+	    if (object->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
+                RectangularCollision(object, renderer->objects[j]);
 	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
-                CircularCollision(renderer->objects[i], renderer->objects[j]);
+                CircularCollision(object, renderer->objects[j]);
 	    } else {
-	        fprintf(stderr, "ERR_NO_COLLISION_FOUND");
+	        fprintf(stderr, "ERR_NO_COLLISION_FOUND\n");
 	    }
 	    
 	}
 	
         /* Object shape */
         glBindVertexArray(renderer->vao);
-	if (renderer->objects[i]->shape->shape == rectangle) {
+	if (object->shape->shape == rectangle) {
 	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_unit_square), indices_unit_square, GL_STATIC_DRAW); /* ebo */
             glBufferData(GL_ARRAY_BUFFER, sizeof(unit_square), unit_square, GL_STATIC_DRAW); /* vao */
-	} else {
+	} else if (object->shape->shape == circle) {
+	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (sizeof(GLuint) * CIRCLE_QUALITY * 3) , &renderer->indices_circle[0], GL_STATIC_DRAW); /* ebo */
+	    glBufferData(GL_ARRAY_BUFFER, (sizeof(GLfloat) * CIRCLE_QUALITY * 4), &renderer->unit_circle[0], GL_STATIC_DRAW); /* vao */
+	} else{
 	    fprintf(stderr, "ERR_VERTICES\n");
 	}
 		
@@ -88,11 +92,20 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
-        renderer->objects[i]->collision->collide_count = 0;
-	memset(renderer->objects[i]->collision->collide, 0, sizeof(renderer->objects[i]->collision->collide));
+        object->collision->collide_count = 0;
+	memset(object->collision->collide, 0, sizeof(object->collision->collide));
+
+	glUniform2f(renderer->move, object->position.x, object->position.y);
 	
-	glUniform2f(renderer->move, renderer->objects[i]->position.x, renderer->objects[i]->position.y);
-	glUniform2f(renderer->model, renderer->objects[i]->shape->size.x, renderer->objects[i]->shape->size.y);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
+	if (object->shape->shape == rectangle) {	    
+	    glUniform2f(renderer->model, object->shape->size.x, object->shape->size.y);
+	    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
+	} else if (object->shape->shape == circle) {
+	    glUniform2f(renderer->model, object->shape->radius, object->shape->radius);
+	    glDrawElements(GL_TRIANGLES, CIRCLE_QUALITY * 10, GL_UNSIGNED_INT, NULL);
+	} else {
+	    fprintf(stderr, "ERR_UNKOWN_SHAPE\n");
+	}
+	
     }
 }

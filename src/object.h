@@ -37,9 +37,11 @@ typedef struct
 {
     GLuint object_count;
     GLuint vao;
-    GLuint ebo;
+    GLuint ebo; 
     GLuint move;
     GLuint model;
+    GLuint *indices_circle;
+    GLfloat *unit_circle;
     Object **objects;
 } Renderer;
 
