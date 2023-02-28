@@ -102,7 +102,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
 	} else if (object->shape->shape == circle) {
 	    glUniform2f(renderer->model, object->shape->radius, object->shape->radius);
-	    glDrawElements(GL_TRIANGLES, CIRCLE_QUALITY * 10, GL_UNSIGNED_INT, NULL);
+	    glDrawElements(GL_TRIANGLES, CIRCLE_QUALITY * 4, GL_UNSIGNED_INT, NULL);
 	} else {
 	    fprintf(stderr, "ERR_UNKOWN_SHAPE\n");
 	}
