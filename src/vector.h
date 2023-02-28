@@ -19,22 +19,6 @@ typedef struct
     GLfloat z;
 } Vector3;
 
-struct vector2list
-{
-    Vector2 data;
-    struct vector2list *next;
-};
-
-typedef struct vector2list Vector2List;
-
-struct vector3list
-{
-    Vector3 data;
-    struct vector3list *next;
-};
-
-typedef struct vector3list Vector3List;
-
 Vector2 vector2(GLfloat x, GLfloat y);
 Vector3 vector3(GLfloat x, GLfloat y, GLfloat z);
 
