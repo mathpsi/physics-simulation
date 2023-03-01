@@ -13,6 +13,17 @@ typedef struct
 
 typedef enum
 {
+    black,
+    white,
+    yellow,
+    green,
+    red,
+    blue,
+    cyan
+} Color;
+
+typedef enum
+{
     rectangle,
     circle /* Unavailable now */
 } Shape_t;
@@ -27,6 +38,7 @@ typedef struct
 typedef struct
 {
     Vector2 position;
+    Color color;
     GLuint id;
 
     Shape *shape;
@@ -40,12 +52,13 @@ typedef struct
     GLuint ebo; 
     GLuint move;
     GLuint model;
+    GLuint color;
     GLuint *indices_circle;
     GLfloat *unit_circle;
     Object **objects;
 } Renderer;
 
-Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Renderer *renderer);
+Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Color color, Renderer *renderer);
 
 Renderer *InitializeRenderer(GLuint program_id);
 

@@ -9,11 +9,12 @@
 #include <math.h>
 #include <string.h>
 
-Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Renderer *renderer) {
+Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Color color, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
     object->collision = malloc(sizeof(Collision));
     object->shape = malloc(sizeof(Shape));
     object->shape->shape = shape;
+    object->color = color;
     
     if (shape != rectangle && shape != circle) {
         fprintf(stderr, "ERR_UNKOWN_SHAPE\n");
@@ -30,6 +31,8 @@ Renderer *InitializeRenderer(GLuint program_id) {
     renderer->objects = malloc(sizeof(Object**));
     GLuint move = glGetUniformLocation(program_id, "move");
     GLuint model = glGetUniformLocation(program_id, "model_wh");
+    GLuint color = glGetUniformLocation(program_id, "new_color");
+    
     renderer->unit_circle = GenerateCircle(1.0f, CIRCLE_QUALITY); /* 32 quality */
     renderer->indices_circle = GenerateCircleIndices(CIRCLE_QUALITY);
     
@@ -46,14 +49,14 @@ Renderer *InitializeRenderer(GLuint program_id) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     
-    renderer->object_count = 0; renderer->vao = vao; renderer->move = move; renderer->model = model; renderer->ebo = ebo;
+    renderer->object_count = 0; renderer->vao = vao; renderer->move = move; renderer->model = model; renderer->color = color; renderer->ebo = ebo;
     
     return renderer;
 }
 
 void RenderObjects(Renderer *renderer, GLuint program_id) {
     /* Clear the screen */
-    glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.0f, 0.5f, 0.5f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(program_id);
@@ -96,7 +99,34 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	memset(object->collision->collide, 0, sizeof(object->collision->collide));
 
 	glUniform2f(renderer->move, object->position.x, object->position.y);
-	
+        switch (object->color)
+	{
+	    case black:
+	        glUniform3f(renderer->color, 0.0f, 0.0f, 0.0f);
+		break;
+	    case white:
+	        glUniform3f(renderer->color, 1.0f, 1.0f, 1.0f);
+		break;
+	    case yellow:
+	        glUniform3f(renderer->color, 1.0f, 1.0f, 0.0f);
+		break;
+	    case green:
+	        glUniform3f(renderer->color, 0.0f, 1.0f, 0.0f);
+		break;
+	    case red:
+	        glUniform3f(renderer->color, 1.0f, 0.0f, 0.0f);
+		break;
+	    case blue:
+	        glUniform3f(renderer->color, 0.0f, 0.0f, 1.0f);
+		break;
+	    case cyan:
+	        glUniform3f(renderer->color, 0.0f, 1.0f, 1.0f);
+		break;
+	    default:
+	        glUniform3f(renderer->color, 1.0f, 0.0f, 1.0f);
+		break;
+	}
+        
 	if (object->shape->shape == rectangle) {	    
 	    glUniform2f(renderer->model, object->shape->size.x, object->shape->size.y);
 	    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);

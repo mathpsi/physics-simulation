@@ -53,13 +53,13 @@ int main() {
     
     Renderer *renderer = InitializeRenderer(program_id);
     
-    Object *object = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, renderer);
-    Object *object_2 = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, renderer);
-    Object *object_3 = InitializeObject(vector2(0.5f, 0.0f), rectangle, vector2(.1f, .05f), .0f, renderer);
-    Object *object_4 = InitializeObject(vector2(0.5f, 0.5f), rectangle, vector2(.05f, .05f), .0f, renderer);
+    Object *object = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, green, renderer);
+    Object *object_2 = InitializeObject(vector2(0.0f, 0.0f), rectangle, vector2(.05f, .05f), .0f, red, renderer);
+    Object *object_3 = InitializeObject(vector2(0.5f, 0.0f), rectangle, vector2(.1f, .05f), .0f, cyan, renderer);
+    Object *object_4 = InitializeObject(vector2(0.5f, 0.5f), rectangle, vector2(.05f, .05f), .0f, blue, renderer);
     
-    Object *object_5 = InitializeObject(vector2(0.0f, -0.5f), circle, VECTOR2_NULL, 0.05f, renderer);
-    Object *object_6 = InitializeObject(vector2(-0.5f, -0.5f), circle, VECTOR2_NULL, 0.05f, renderer);
+    Object *object_5 = InitializeObject(vector2(0.0f, -0.5f), circle, VECTOR2_NULL, 0.05f, yellow, renderer);
+    Object *object_6 = InitializeObject(vector2(-0.5f, -0.5f), circle, VECTOR2_NULL, 0.05f, white, renderer);
     
     GLfloat x = -1.0f;
     GLfloat y_4 = 1.0f;
