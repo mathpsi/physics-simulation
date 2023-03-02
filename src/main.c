@@ -66,6 +66,7 @@ int main() {
     GLuint fps;
 
     object_1->rigidbody.velocity = vector2(0.5f, 0.5f);
+    object_1->rigidbody.mass = object_2->rigidbody.mass = 1.0f;
     
     do {
         /* FPS Counter */
