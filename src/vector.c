@@ -1,7 +1,6 @@
 #include "vector.h"
 
 #include <glad/glad.h>
-#include <stdlib.h>
 
 Vector2 vector2(GLfloat x, GLfloat y) {
     Vector2 vector;
@@ -46,6 +45,36 @@ Vector3 vector3_sub(Vector3 vector_1, Vector3 vector_2) {
     vector.y = vector_1.y - vector_2.y;
     vector.z = vector_1.z - vector_2.z;
 
+    return vector;
+}
+
+Vector2 vector2_mnum(GLfloat num, Vector2 vector_1) {
+    Vector2 vector;
+    vector.x = vector_1.x * num;
+    vector.y = vector_1.y * num;
+    return vector;
+}
+
+Vector3 vector3_mnum(GLfloat num, Vector3 vector_1) {
+    Vector3 vector;
+    vector.x = vector_1.x * num;
+    vector.y = vector_1.y * num;
+    vector.z = vector_1.z * num;
+    return vector;
+}
+
+Vector2 vector2_dnum(GLfloat num, Vector2 vector_1) {
+    Vector2 vector;
+    vector.x = vector_1.x/num;
+    vector.y = vector_1.y/num;
+    return vector;
+}
+
+Vector3 vector3_dnum(float num, Vector3 vector_1) {
+    Vector3 vector;
+    vector.x = vector_1.x/num;
+    vector.y = vector_1.y/num;
+    vector.z = vector_1.z/num;
     return vector;
 }
 

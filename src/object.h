@@ -11,6 +11,15 @@ typedef struct
     GLuint collide_count;
 } Collision;
 
+typedef struct
+{
+    GLfloat mass;
+    Vector2 force;
+    Vector2 acceleration;
+    Vector2 velocity;
+    GLuint coll;
+} Rigidbody;
+
 typedef enum
 {
     black,
@@ -43,6 +52,7 @@ typedef struct
 
     Shape *shape;
     Collision *collision;
+    Rigidbody rigidbody;
 } Object;
 
 typedef struct
@@ -53,6 +63,7 @@ typedef struct
     GLuint move;
     GLuint model;
     GLuint color;
+    GLfloat time_delta;
     GLuint *indices_circle;
     GLfloat *unit_circle;
     Object **objects;

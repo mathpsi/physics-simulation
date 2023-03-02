@@ -26,6 +26,10 @@ Vector2 vector2_sum(Vector2 vector_1, Vector2 vector_2);
 Vector3 vector3_sum(Vector3 vector_1, Vector3 vector_2);
 Vector2 vector2_sub(Vector2 vector_1, Vector2 vector_2);
 Vector3 vector3_sub(Vector3 vector_1, Vector3 vector_2);
+Vector2 vector2_mnum(GLfloat num, Vector2 vector_1);
+Vector3 vector3_mnum(GLfloat num, Vector3 vector_1);
+Vector2 vector2_dnum(GLfloat num, Vector2 vector_1);
+Vector3 vector3_dnum(GLfloat num, Vector3 vector_1);
 int vector2_comp(Vector2 vector_1, Vector2 vector_2);
 int vector3_comp(Vector3 vector_1, Vector3 vector_2);
 

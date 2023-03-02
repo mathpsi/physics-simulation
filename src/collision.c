@@ -7,6 +7,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int is_colliding(Object *object_1, Object *object_2) {
+    for (int i = 0; sizeof(object_1->collision->collide)/sizeof(GLfloat); i++) {
+        if (object_1->collision->collide[i] == object_2->id) {
+	    return 1;
+	} else {
+	    return 0;
+	}
+    }
+}
+
 int CircularCollision(Object *object_1, Object *object_2) {
     if (object_1->shape->shape != circle || object_2->shape->shape != circle) {
         fprintf(stderr, "WARN_INCOMPATIBLE_COLLISION\n");      

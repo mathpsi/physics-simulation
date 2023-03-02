@@ -2,12 +2,14 @@
 #include "collision.h"
 #include "shape.h"
 #include "vector.h"
+#include "physics.h"
 
 #include <glad/glad.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+
 
 Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Color color, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
@@ -70,13 +72,14 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	    if (object->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
                 RectangularCollision(object, renderer->objects[j]);
 	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
-                CircularCollision(object, renderer->objects[j]);
+	        if (CircularCollision(object, renderer->objects[j])) {
+	   	    ElasticCollision(renderer->objects[i], renderer->objects[j]);
+	        }
 	    } else {
 	        fprintf(stderr, "ERR_NO_COLLISION_FOUND\n");
 	    }
-	    
 	}
-	
+
         /* Object shape */
         glBindVertexArray(renderer->vao);
 	if (object->shape->shape == rectangle) {
