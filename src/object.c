@@ -15,6 +15,7 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
     Object *object = malloc(sizeof(Object));
     object->collision = malloc(sizeof(Collision));
     object->shape = malloc(sizeof(Shape));
+    object->rigidbody = calloc(1, sizeof(Rigidbody));
     object->shape->shape = shape;
     object->color = color;
     

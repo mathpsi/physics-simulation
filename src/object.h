@@ -52,7 +52,7 @@ typedef struct
 
     Shape *shape;
     Collision *collision;
-    Rigidbody rigidbody;
+    Rigidbody *rigidbody;
 } Object;
 
 typedef struct

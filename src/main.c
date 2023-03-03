@@ -56,7 +56,8 @@ int main() {
     
     Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), circle, VECTOR2_NULL, 0.05f, yellow, renderer);
     Object *object_2 = InitializeObject(vector2(-0.5f, -0.5f), circle, VECTOR2_NULL, 0.05f, white, renderer);
-
+    Object *object_3 = InitializeObject(vector2(0.5f, 0.5f), circle, VECTOR2_NULL, 0.05f, red, renderer);
+    
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
 
@@ -65,8 +66,9 @@ int main() {
     GLfloat time_delta;
     GLuint fps;
 
-    object_1->rigidbody.velocity = vector2(0.5f, 0.5f);
-    object_1->rigidbody.mass = object_2->rigidbody.mass = 1.0f;
+    object_1->rigidbody->velocity = vector2(0.5f, 0.5f);
+    object_1->rigidbody->mass = object_2->rigidbody->mass = 1.0f;
+    object_3->rigidbody->mass = 0.5f; object_3->rigidbody->velocity = vector2(-0.6f, -0.6f);
     
     do {
         /* FPS Counter */
