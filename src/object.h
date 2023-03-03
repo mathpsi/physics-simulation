@@ -13,8 +13,18 @@ typedef struct
 
 typedef struct
 {
-    GLfloat mass;
     Vector2 force;
+    GLfloat time;
+    GLfloat apply_time;
+    GLuint applied;
+} Force;
+
+typedef struct
+{
+    GLfloat mass;
+    Vector2 force_net;
+    Force force[50]; /* Max forces for now 50 */
+    GLuint force_count;
     Vector2 acceleration;
     Vector2 velocity;
     GLuint coll;
@@ -63,6 +73,7 @@ typedef struct
     GLuint move;
     GLuint model;
     GLuint color;
+    GLfloat time;
     GLfloat time_delta;
     GLuint *indices_circle;
     GLfloat *unit_circle;

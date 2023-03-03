@@ -66,14 +66,15 @@ int main() {
     GLfloat time_delta;
     GLuint fps;
 
-    object_1->rigidbody->velocity = vector2(0.5f, 0.5f);
-    object_1->rigidbody->mass = object_2->rigidbody->mass = 1.0f;
-    object_3->rigidbody->mass = 0.5f; object_3->rigidbody->velocity = vector2(-0.6f, -0.6f);
+    object_1->rigidbody->mass = object_2->rigidbody->mass = object_3->rigidbody->mass = 1.0f;
+    ApplyForce(object_1, vector2(0.02f, 0.02f), 0.3f, glfwGetTime());
+    ApplyForce(object_3, vector2(-0.01f, -0.01f), 0.1f, glfwGetTime());
     
     do {
         /* FPS Counter */
         time_delta = 1.0f/(time_last - time_current);
         //printf("FPS: %f\n", time_delta);
+	renderer->time = glfwGetTime();
 	renderer->time_delta = 1.0f/time_delta;
 	
 	time_current = glfwGetTime();

@@ -16,6 +16,7 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
     object->collision = malloc(sizeof(Collision));
     object->shape = malloc(sizeof(Shape));
     object->rigidbody = calloc(1, sizeof(Rigidbody));
+    // object->rigidbody->force = malloc(sizeof(Force) * 10);
     object->shape->shape = shape;
     object->color = color;
     
@@ -74,7 +75,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
                 RectangularCollision(object, renderer->objects[j]);
 	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
 	        if (CircularCollision(object, renderer->objects[j])) {
-	   	    ElasticCollision(renderer->objects[i], renderer->objects[j]);
+                    ElasticCollision(renderer->objects[i], renderer->objects[j]);
 	        }
 	    } else {
 	        fprintf(stderr, "ERR_NO_COLLISION_FOUND\n");
