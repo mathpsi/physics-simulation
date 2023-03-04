@@ -67,8 +67,8 @@ int main() {
     GLuint fps;
 
     object_1->rigidbody->mass = object_2->rigidbody->mass = object_3->rigidbody->mass = 1.0f;
-    ApplyForce(object_1, vector2(20.0f, 20.0f), 3.0f, glfwGetTime());
-    ApplyForce(object_3, vector2(-10.0f, -10.0f), 1.0f, glfwGetTime());
+    ApplyForce(object_1, vector2(0.2f, 0.2f), 3.0f, glfwGetTime());
+    ApplyForce(object_3, vector2(-0.1f, -0.1f), 1.0f, glfwGetTime());
     
     do {
         /* FPS Counter */

@@ -52,7 +52,7 @@ void SimulatePhysics(Renderer *renderer) {
 
 	/* F=ma Thank you, Sir Isaac Newton */
 	object->rigidbody->acceleration = vector2_dnum(object->rigidbody->mass, vector2_mnum(renderer->time_delta, object->rigidbody->force_net));
-	object->rigidbody->velocity = vector2_sum(object->rigidbody->velocity, vector2_mnum(renderer->time_delta, object->rigidbody->acceleration));
+	object->rigidbody->velocity = vector2_sum(object->rigidbody->velocity, object->rigidbody->acceleration);
 	object->position = vector2_sum(object->position, vector2_mnum(renderer->time_delta, object->rigidbody->velocity));
     }
 }
