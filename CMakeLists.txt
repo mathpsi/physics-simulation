@@ -12,6 +12,7 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/shader.c ${PROJECT_SOURCE_DIR}/object.c
     ${PROJECT_SOURCE_DIR}/collision.c ${PROJECT_SOURCE_DIR}/shape.c
     ${PROJECT_SOURCE_DIR}/vector.c ${PROJECT_SOURCE_DIR}/physics.c
+    ${PROJECT_SOURCE_DIR}/gui.c
 )
 
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "GLFW lib only")

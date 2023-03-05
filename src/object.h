@@ -4,6 +4,9 @@
 #include "vector.h"
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+extern GLfloat zoom_value;
 
 typedef struct
 {
@@ -68,8 +71,11 @@ typedef struct
 typedef struct
 {
     GLuint object_count;
+    GLuint program_id;
     GLuint vao;
-    GLuint ebo; 
+    GLuint vbo;
+    GLuint ebo;
+    GLuint zoom;
     GLuint move;
     GLuint model;
     GLuint color;
@@ -84,7 +90,8 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
 
 Renderer *InitializeRenderer(GLuint program_id);
 
-void RenderObjects(Renderer *renderer, GLuint program_id);
+void RenderObjects(Renderer *renderer);
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
 #include "collision.h"
 

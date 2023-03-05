@@ -2,6 +2,7 @@
 #include "object.h"
 #include "vector.h"
 #include "physics.h"
+#include "gui.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -36,6 +37,7 @@ int main() {
     }
      
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetScrollCallback(window, scroll_callback);
 
     GLuint program_id; /* For handling program id */
     
@@ -51,7 +53,10 @@ int main() {
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("Vendor: %s\n", glGetString(GL_VENDOR));
     printf("Version: %s\n", glGetString(GL_VERSION));
-    
+
+    printf("To zoom scroll your mouse wheel.\n");
+
+    Gui_renderer *gui_renderer = initialize_gui_renderer(program_id);
     Renderer *renderer = InitializeRenderer(program_id);
     
     Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), circle, VECTOR2_NULL, 0.05f, yellow, renderer);
@@ -81,12 +86,15 @@ int main() {
 
         /* Projection matrix */
         glUniform1f(aspect_ratio_location, aspect_ratio);
-
+	
 	/* Physics simulation */
         SimulatePhysics(renderer);
 	
 	/* Rendering objects */
-        RenderObjects(renderer, program_id);
+        RenderObjects(renderer);
+
+	/* GUI */
+        render_gui(gui_renderer);
 	
 	/* Swap buffers */
 	glfwSwapBuffers(window);

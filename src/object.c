@@ -3,13 +3,16 @@
 #include "shape.h"
 #include "vector.h"
 #include "physics.h"
+#include "shader.h"
 
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 
+GLfloat zoom_value = 2.0f;
 
 Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat radius, Color color, Renderer *renderer) {
     Object *object = malloc(sizeof(Object));
@@ -33,6 +36,7 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
 Renderer *InitializeRenderer(GLuint program_id) {
     Renderer *renderer = malloc(sizeof(Renderer));
     renderer->objects = malloc(sizeof(Object**));
+    GLuint zoom = glGetUniformLocation(program_id, "zoom");
     GLuint move = glGetUniformLocation(program_id, "move");
     GLuint model = glGetUniformLocation(program_id, "model_wh");
     GLuint color = glGetUniformLocation(program_id, "new_color");
@@ -53,17 +57,18 @@ Renderer *InitializeRenderer(GLuint program_id) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     
-    renderer->object_count = 0; renderer->vao = vao; renderer->move = move; renderer->model = model; renderer->color = color; renderer->ebo = ebo;
+    renderer->object_count = 0; renderer->vao = vao; renderer->move = move; renderer->model = model; renderer->color = color; renderer->ebo = ebo; renderer->program_id = program_id; renderer->vbo = vbo; renderer->zoom = zoom;
     
     return renderer;
 }
 
-void RenderObjects(Renderer *renderer, GLuint program_id) {
+void RenderObjects(Renderer *renderer) {
     /* Clear the screen */
     glClearColor(0.0f, 0.5f, 0.5f, 0.5f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(program_id);
+    glUseProgram(renderer->program_id);
+    glBindBuffer(GL_ARRAY_BUFFER, renderer->vbo);
     
     /* Draw objects */
     /* TODO: Draw objects without calling glBufferData for each frame */
@@ -99,7 +104,7 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	} else {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
-
+	
         object->collision->collide_count = 0;
 	memset(object->collision->collide, 0, sizeof(object->collision->collide));
 
@@ -131,7 +136,9 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	        glUniform3f(renderer->color, 1.0f, 0.0f, 1.0f);
 		break;
 	}
-        
+
+
+	glUniform1f(renderer->zoom, zoom_value);
 	if (object->shape->shape == rectangle) {	    
 	    glUniform2f(renderer->model, object->shape->size.x, object->shape->size.y);
 	    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
@@ -143,4 +150,8 @@ void RenderObjects(Renderer *renderer, GLuint program_id) {
 	}
 	
     }
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+    zoom_value += yoffset;
 }
