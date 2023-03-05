@@ -153,5 +153,5 @@ void RenderObjects(Renderer *renderer) {
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-    zoom_value += yoffset;
+    zoom_value -= yoffset;
 }
