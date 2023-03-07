@@ -58,10 +58,12 @@ int main() {
 
     Gui_renderer *gui_renderer = initialize_gui_renderer(program_id);
     Renderer *renderer = InitializeRenderer(program_id);
+
+    Gui_object *button = gui_button(vector2(.0f, .0f), vector2(.05f, .05f), gui_renderer);
     
-    Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), circle, VECTOR2_NULL, 0.05f, yellow, renderer);
-    Object *object_2 = InitializeObject(vector2(-0.5f, -0.5f), circle, VECTOR2_NULL, 0.05f, white, renderer);
-    Object *object_3 = InitializeObject(vector2(0.5f, 0.5f), circle, VECTOR2_NULL, 0.05f, red, renderer);
+    Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), circle, VECTOR2_NULL, .05f, yellow, renderer);
+    Object *object_2 = InitializeObject(vector2(-.5f, -.5f), circle, VECTOR2_NULL, .05f, white, renderer);
+    Object *object_3 = InitializeObject(vector2(.5f, .5f), circle, VECTOR2_NULL, .05f, red, renderer);
     
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");
@@ -72,8 +74,8 @@ int main() {
     GLuint fps;
 
     object_1->rigidbody->mass = object_2->rigidbody->mass = object_3->rigidbody->mass = 1.0f;
-    ApplyForce(object_1, vector2(0.2f, 0.2f), 3.0f, glfwGetTime());
-    ApplyForce(object_3, vector2(-0.1f, -0.1f), 1.0f, glfwGetTime());
+    ApplyForce(object_1, vector2(.2f, .2f), 3.0f, glfwGetTime());
+    ApplyForce(object_3, vector2(-.1f, -.1f), 1.0f, glfwGetTime());
     
     do {
         /* FPS Counter */
@@ -94,7 +96,7 @@ int main() {
         RenderObjects(renderer);
 
 	/* GUI */
-        render_gui(gui_renderer);
+        gui_render(gui_renderer);
 	
 	/* Swap buffers */
 	glfwSwapBuffers(window);
