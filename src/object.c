@@ -23,7 +23,7 @@ Object *InitializeObject(Vector2 position, Shape_t shape, Vector2 size, GLfloat 
     object->shape->shape = shape;
     object->color = color;
     
-    if (shape != rectangle && shape != circle) {
+    if (shape != RECTANGLE && shape != CIRCLE) {
         fprintf(stderr, "ERR_UNKOWN_SHAPE\n");
     }
     object->collision->collide = malloc(sizeof(GLuint*));
@@ -76,9 +76,9 @@ void RenderObjects(Renderer *renderer) {
         Object *object = renderer->objects[i];
         /* Collision detection */
         for (int j = i + 1; j < renderer->object_count; j++) {
-	    if (object->shape->shape == rectangle && renderer->objects[j]->shape->shape == rectangle) {
+	    if (object->shape->shape == RECTANGLE && renderer->objects[j]->shape->shape == RECTANGLE) {
                 RectangularCollision(object, renderer->objects[j]);
-	    } else if (renderer->objects[i]->shape->shape == circle && renderer->objects[j]->shape->shape == circle) {
+	    } else if (renderer->objects[i]->shape->shape == CIRCLE && renderer->objects[j]->shape->shape == CIRCLE) {
 	        if (CircularCollision(object, renderer->objects[j])) {
                     ElasticCollision(renderer->objects[i], renderer->objects[j]);
 	        }
@@ -89,10 +89,10 @@ void RenderObjects(Renderer *renderer) {
 
         /* Object shape */
         glBindVertexArray(renderer->vao);
-	if (object->shape->shape == rectangle) {
+	if (object->shape->shape == RECTANGLE) {
 	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_unit_square), indices_unit_square, GL_STATIC_DRAW); /* ebo */
             glBufferData(GL_ARRAY_BUFFER, sizeof(unit_square), unit_square, GL_STATIC_DRAW); /* vao */
-	} else if (object->shape->shape == circle) {
+	} else if (object->shape->shape == CIRCLE) {
 	    glBufferData(GL_ELEMENT_ARRAY_BUFFER, (sizeof(GLuint) * CIRCLE_QUALITY * 3) , &renderer->indices_circle[0], GL_STATIC_DRAW); /* ebo */
 	    glBufferData(GL_ARRAY_BUFFER, (sizeof(GLfloat) * CIRCLE_QUALITY * 4), &renderer->unit_circle[0], GL_STATIC_DRAW); /* vao */
 	} else{
@@ -111,25 +111,25 @@ void RenderObjects(Renderer *renderer) {
 	glUniform2f(renderer->move, object->position.x, object->position.y);
         switch (object->color)
 	{
-	    case black:
+	    case BLACK:
 	        glUniform3f(renderer->color, 0.0f, 0.0f, 0.0f);
 		break;
-	    case white:
+	    case WHITE:
 	        glUniform3f(renderer->color, 1.0f, 1.0f, 1.0f);
 		break;
-	    case yellow:
+	    case YELLOW:
 	        glUniform3f(renderer->color, 1.0f, 1.0f, 0.0f);
 		break;
-	    case green:
+	    case GREEN:
 	        glUniform3f(renderer->color, 0.0f, 1.0f, 0.0f);
 		break;
-	    case red:
+	    case RED:
 	        glUniform3f(renderer->color, 1.0f, 0.0f, 0.0f);
 		break;
-	    case blue:
+	    case BLUE:
 	        glUniform3f(renderer->color, 0.0f, 0.0f, 1.0f);
 		break;
-	    case cyan:
+	    case CYAN:
 	        glUniform3f(renderer->color, 0.0f, 1.0f, 1.0f);
 		break;
 	    default:
@@ -139,10 +139,10 @@ void RenderObjects(Renderer *renderer) {
 
 
 	glUniform1f(renderer->zoom, zoom_value);
-	if (object->shape->shape == rectangle) {	    
+	if (object->shape->shape == RECTANGLE) {	    
 	    glUniform2f(renderer->model, object->shape->size.x, object->shape->size.y);
 	    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, NULL);
-	} else if (object->shape->shape == circle) {
+	} else if (object->shape->shape == CIRCLE) {
 	    glUniform2f(renderer->model, object->shape->radius, object->shape->radius);
 	    glDrawElements(GL_TRIANGLES, CIRCLE_QUALITY * 4, GL_UNSIGNED_INT, NULL);
 	} else {

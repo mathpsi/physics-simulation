@@ -35,19 +35,19 @@ typedef struct
 
 typedef enum
 {
-    black,
-    white,
-    yellow,
-    green,
-    red,
-    blue,
-    cyan
+    BLACK,
+    WHITE,
+    YELLOW,
+    GREEN,
+    RED,
+    BLUE,
+    CYAN
 } Color;
 
 typedef enum
 {
-    rectangle,
-    circle /* Unavailable now */
+    RECTANGLE,
+    CIRCLE
 } Shape_t;
 
 typedef struct

@@ -61,9 +61,9 @@ int main() {
 
     Gui_object *button = gui_button(vector2(.0f, .0f), vector2(.05f, .05f), gui_renderer);
     
-    Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), circle, VECTOR2_NULL, .05f, yellow, renderer);
-    Object *object_2 = InitializeObject(vector2(-.5f, -.5f), circle, VECTOR2_NULL, .05f, white, renderer);
-    Object *object_3 = InitializeObject(vector2(.5f, .5f), circle, VECTOR2_NULL, .05f, red, renderer);
+    Object *object_1 = InitializeObject(vector2(-1.0f, -1.0f), CIRCLE, VECTOR2_NULL, .05f, YELLOW, renderer);
+    Object *object_2 = InitializeObject(vector2(-.5f, -.5f), CIRCLE, VECTOR2_NULL, .05f, WHITE, renderer);
+    Object *object_3 = InitializeObject(vector2(.5f, .5f), CIRCLE, VECTOR2_NULL, .05f, RED, renderer);
     
     GLfloat aspect_ratio = 1920.0f/1080.0f; /* a=w/h */    
     GLuint aspect_ratio_location = glGetUniformLocation(program_id, "aspect_r");

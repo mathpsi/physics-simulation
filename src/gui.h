@@ -1,12 +1,15 @@
 #ifndef GUI_H
 #define GUI_H
 
-#define GUI_BUTTON 0x0
-#define GUI_TEXT 0x1
-
 #include "vector.h"
 
 #include <glad/glad.h>
+
+typedef enum
+{
+    GUI_BUTTON,
+    GUI_TEXT
+} Gui_type;
 
 typedef struct
 {
@@ -16,7 +19,7 @@ typedef struct
 
 typedef struct
 {
-    GLuint object_type;
+    Gui_type type;
     Gui_button *button;
 } Gui_object;
 

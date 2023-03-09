@@ -36,7 +36,7 @@ Gui_object *gui_button(Vector2 position, Vector2 size, Gui_renderer *renderer) {
     Gui_object *button = malloc(sizeof(Gui_object));
     button->button = malloc(sizeof(Gui_button));
     renderer->objects = realloc(renderer->objects, sizeof(Gui_object**) * (renderer->object_count + 1));
-    button->object_type = GUI_BUTTON; button->button->position = position; button->button->size = size;
+    button->type = GUI_BUTTON; button->button->position = position; button->button->size = size;
     renderer->objects[renderer->object_count] = button; renderer->object_count++;
     return button;
 }
@@ -55,7 +55,7 @@ void gui_render(Gui_renderer *renderer) {
 	
         glUniform1f(renderer->zoom, 1.0f);
 	
-	switch (object->object_type)
+	switch (object->type)
 	{
 	    case GUI_BUTTON:
 	    {        
@@ -69,7 +69,7 @@ void gui_render(Gui_renderer *renderer) {
 }
 
 int gui_collision(Gui_object *object, Vector2 cursor_position) {
-    switch (object->object_type)
+    switch (object->type)
     {
         case GUI_BUTTON:
 	{

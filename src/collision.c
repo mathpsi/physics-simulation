@@ -18,7 +18,7 @@ int is_colliding(Object *object_1, Object *object_2) {
 }
 
 int CircularCollision(Object *object_1, Object *object_2) {
-    if (object_1->shape->shape != circle || object_2->shape->shape != circle) {
+    if (object_1->shape->shape != CIRCLE || object_2->shape->shape != CIRCLE) {
         fprintf(stderr, "WARN_INCOMPATIBLE_COLLISION\n");      
     }
     
@@ -43,7 +43,7 @@ int CircularCollision(Object *object_1, Object *object_2) {
 }
 
 int RectangularCollision(Object *object_1, Object *object_2) {
-    if (object_1->shape->shape != rectangle || object_2->shape->shape != rectangle) {
+    if (object_1->shape->shape != RECTANGLE || object_2->shape->shape != RECTANGLE) {
         fprintf(stderr, "WARN_INCOMPATIBLE_COLLISION\n");      
     }
 
